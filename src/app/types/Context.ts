@@ -17,6 +17,8 @@ export interface ModalsContextProps {
   onShowCourseInfoModal: () => void;
   showMajorSelectionModal: boolean;
   setShowMajorSelectionModal: setShow;
+  showDegreeRequirementsModal: boolean;
+  setShowDegreeRequirementsModal: setShow;
   courseState: PlannerData;
 }
 

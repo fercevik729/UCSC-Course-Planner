@@ -12,10 +12,10 @@ import { GEProgress } from "./GEProgress";
 import { PlannerContext } from "../contexts/PlannerProvider";
 import { useContext } from "react";
 import PlannerActions from "./PlannerActions";
-import { ModalsProvider } from "../contexts/ModalsProvider";
 import ExportModal from "./ExportModal";
 import CourseInfoModal from "./CourseInfoModal";
 import MajorSelectionModal from "./modals/MajorSelectionModal";
+import DegreeRequirementsModal from "./modals/DegreeRequirementsModal";
 
 export default function Planner({ isActive }: { isActive: boolean }) {
   const {
@@ -43,45 +43,43 @@ export default function Planner({ isActive }: { isActive: boolean }) {
       <SaveSnackbars saving={saveStatus} saveError={saveError} />
       <div>
         <DragDropContext onDragEnd={handleDragEnd}>
-          <ModalsProvider>
-            <div className="flex justify-between space-x-4">
-              <div className="flex-initial pr-2">
-                <Search />
-              </div>
-              {loading ? (
-                <CircularProgress />
-              ) : (
-                <>
-                  <div className="overflow-auto h-[92vh] w-full">
-                    <Quarters courseState={courseState} />
-                  </div>
-
-                  {/* Modals and Grad Progress */}
-                  <div className="self-start">
-                    <Card variant="plain">
-                      <div>
-                        <PlannerActions />
-                        <Modals />
-                      </div>
-
-                      <hr className="rounded border-t border-slate-300" />
-
-                      <div className="flex justify-items-center">
-                        <GradProgress credits={totalCredits} />
-                      </div>
-
-                      <hr className="rounded border-t border-slate-300" />
-
-                      <div className="flex place-items-center">
-                        <GEProgress ge={geSatisfied} />
-                      </div>
-                    </Card>
-                  </div>
-                  {/* End Modals */}
-                </>
-              )}
+          <div className="flex justify-between space-x-4">
+            <div className="flex-initial pr-2">
+              <Search />
             </div>
-          </ModalsProvider>
+            {loading ? (
+              <CircularProgress />
+            ) : (
+              <>
+                <div className="overflow-auto h-[92vh] w-full">
+                  <Quarters courseState={courseState} />
+                </div>
+
+                {/* Modals and Grad Progress */}
+                <div className="self-start">
+                  <Card variant="plain">
+                    <div>
+                      <PlannerActions />
+                      <Modals />
+                    </div>
+
+                    <hr className="rounded border-t border-slate-300" />
+
+                    <div className="flex justify-items-center">
+                      <GradProgress credits={totalCredits} />
+                    </div>
+
+                    <hr className="rounded border-t border-slate-300" />
+
+                    <div className="flex place-items-center">
+                      <GEProgress ge={geSatisfied} />
+                    </div>
+                  </Card>
+                </div>
+                {/* End Modals */}
+              </>
+            )}
+          </div>
         </DragDropContext>
       </div>
     </>
@@ -94,6 +92,7 @@ function Modals() {
       <CourseInfoModal />
       <ExportModal />
       <MajorSelectionModal />
+      <DegreeRequirementsModal />
     </>
   );
 }

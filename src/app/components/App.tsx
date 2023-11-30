@@ -10,21 +10,24 @@ import {
   PlannersProvider,
 } from "../contexts/PlannersProvider";
 import { PlannerProvider } from "../contexts/PlannerProvider";
+import { ModalsProvider } from "../contexts/ModalsProvider";
 
 export default function App() {
   return (
     <PlannersProvider>
       <div className="h-full min-h-screen w-full bg-slate-200 flex flex-col justify-between">
         <ScreenSizeWarning />
-        <Navbar />
-        <div className="pt-4 mb-auto">
-          <div className="flex justify-left px-7">
-            <PlannerTabs />
+        <ModalsProvider>
+          <Navbar />
+          <div className="pt-4 mb-auto">
+            <div className="flex justify-left px-7">
+              <PlannerTabs />
+            </div>
+            <div className="px-5">
+              <PlannerList />
+            </div>
           </div>
-          <div className="px-5">
-            <PlannerList />
-          </div>
-        </div>
+        </ModalsProvider>
         <Footer />
       </div>
     </PlannersProvider>
