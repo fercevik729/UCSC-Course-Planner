@@ -132,7 +132,7 @@ export default function Search() {
             placeholder="Department"
             name="department"
             aria-label="department"
-            className="col-span-4 bg-slate-100"
+            className="col-span-4"
             variant="soft"
             onChange={handleChangeDepartment}
             value={departmentCode ?? ""}

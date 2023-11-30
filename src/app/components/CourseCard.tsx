@@ -14,12 +14,14 @@ import { WarningAmberRounded } from "@mui/icons-material";
 import CloseIconButton from "./CloseIconButton";
 import CourseLabel from "./CourseLabel";
 import { Label } from "../types/Label";
+import { COURSE_BG } from "@/lib/colorConstants";
 
 export default function CourseCard({
   course,
   index,
   quarterId,
   provided,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   isDragging,
 }: {
   course: StoredCourse;
@@ -51,13 +53,17 @@ export default function CourseCard({
       {...provided.draggableProps}
       {...provided.dragHandleProps}
       size="sm"
+      sx={{
+        "&:hover": {
+          opacity: 0.5,
+        },
+      }}
       variant="outlined"
       style={{
         ...getItemStyle(provided.draggableProps.style),
         height: "35px",
         justifyContent: "center",
-        backgroundColor:
-          isDragging || highlighted ? "rgb(226 232 240)" : "#F1F5F9",
+        backgroundColor: COURSE_BG,
       }}
       onMouseEnter={() => setHighlighted(true)}
       onMouseLeave={() => setHighlighted(false)}

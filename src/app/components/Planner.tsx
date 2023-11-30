@@ -15,6 +15,13 @@ import PlannerActions from "./PlannerActions";
 import { ModalsProvider } from "../contexts/ModalsProvider";
 import ExportModal from "./ExportModal";
 import CourseInfoModal from "./CourseInfoModal";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionGroup,
+  AccordionSummary,
+} from "@mui/joy";
+import { Quarter } from "../types/Quarter";
 import MajorSelectionModal from "./modals/MajorSelectionModal";
 
 export default function Planner({ isActive }: { isActive: boolean }) {
@@ -53,7 +60,7 @@ export default function Planner({ isActive }: { isActive: boolean }) {
               ) : (
                 <>
                   <div className="overflow-auto h-[92vh] w-full">
-                    <Quarters courseState={courseState} />
+                    <Years courseState={courseState} />
                   </div>
 
                   {/* Modals and Grad Progress */}
@@ -98,31 +105,72 @@ function Modals() {
   );
 }
 
-function Quarters({ courseState }: { courseState: PlannerData }) {
+function Years({ courseState }: { courseState: PlannerData }) {
   return (
-    <div className="space-y-2">
-      {Array.from({ length: quartersPerYear }, (_, index) => index).map((i) => {
-        const slice_val = quartersPerYear * i;
-        const quarters = courseState.quarters.slice(
-          slice_val,
-          slice_val + quartersPerYear,
-        );
-        return (
-          <div key={i} className="flex flex-row space-x-2">
-            {quarters.map((quarter) => {
-              const courses = findCoursesInQuarter(courseState, quarter.id);
-              return (
-                <QuarterCard
-                  id={quarter.id}
-                  key={quarter.id}
-                  title={quarter.title}
-                  courses={courses}
-                />
-              );
-            })}
-          </div>
-        );
-      })}
-    </div>
+    <AccordionGroup>
+      <div className="space-y-2">
+        {Array.from({ length: quartersPerYear }, (_, index) => index).map(
+          (i) => {
+            const slice_val = quartersPerYear * i;
+            const quarters = courseState.quarters.slice(
+              slice_val,
+              slice_val + quartersPerYear,
+            );
+
+            return (
+              <Quarters
+                key={i}
+                year={i + 1}
+                quarters={quarters}
+                courseState={courseState}
+              />
+            );
+          },
+        )}
+      </div>
+    </AccordionGroup>
+  );
+}
+
+function Quarters({
+  year,
+  quarters,
+  courseState,
+}: {
+  year: number;
+  quarters: Quarter[];
+  courseState: PlannerData;
+}) {
+  return (
+    <Accordion
+      sx={{
+        backgroundColor: "white",
+        borderRadius: "0.5rem",
+        "&.MuiAccordion-root": {
+          "& .MuiAccordionSummary-root": {
+            padding: "0.5rem 0",
+            paddingX: "0.5rem",
+          },
+        },
+      }}
+      defaultExpanded={true}
+    >
+      <AccordionSummary>Year {year}</AccordionSummary>
+      <AccordionDetails>
+        <div className="flex flex-row space-x-2">
+          {quarters.map((quarter) => {
+            const courses = findCoursesInQuarter(courseState, quarter.id);
+            return (
+              <QuarterCard
+                id={quarter.id}
+                key={quarter.id}
+                title={quarter.title}
+                courses={courses}
+              />
+            );
+          })}
+        </div>
+      </AccordionDetails>
+    </Accordion>
   );
 }

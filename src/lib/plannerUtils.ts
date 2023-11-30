@@ -37,7 +37,7 @@ export function createQuarters() {
       const id = `quarter-${year}-${quarterNames[quarter]}`;
       quarters.push({
         id,
-        title: `Year ${year + 1}: ${quarterNames[quarter]}`,
+        title: `${quarterNames[quarter]}`,
         courses: [],
       });
     }
