@@ -15,11 +15,13 @@ const quarterNames = ["Summer", "Fall", "Winter", "Spring"];
 const years = 4;
 export const quartersPerYear = 4;
 
-export const initialPlanner: PlannerData = {
-  quarters: createQuarters(),
-  years,
-  courses: [],
-  labels: initialLabels,
+export const getInitialPlanner = (catalogYear: number): PlannerData => {
+  return {
+    quarters: createQuarters(catalogYear),
+    years,
+    courses: [],
+    labels: initialLabels,
+  };
 };
 
 export const emptyPlanner: PlannerData = {
@@ -29,10 +31,10 @@ export const emptyPlanner: PlannerData = {
   labels: [],
 };
 
-export function createQuarters() {
+export function createQuarters(catalogYear: number): Quarter[] {
   const quarters: Quarter[] = [];
 
-  for (let year = 0; year < years; year++) {
+  for (let year = catalogYear; year < catalogYear + years; year++) {
     for (let quarter = 0; quarter < quartersPerYear; quarter++) {
       const id = `quarter-${year}-${quarterNames[quarter]}`;
       quarters.push({
@@ -136,6 +138,10 @@ export function getTitle({ title, departmentCode, number }: StoredCourse) {
   return title !== undefined && title.length > 0
     ? title
     : `${departmentCode} ${number}`;
+}
+
+export function getSchoolYear(year: number) {
+  return `${year} - ${year + 1}`;
 }
 
 export function createCourseFromId(id: string): Omit<StoredCourse, "id"> {

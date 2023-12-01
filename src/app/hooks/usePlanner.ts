@@ -22,15 +22,19 @@ const SAVE_PLANNER = gql`
   }
 `;
 
-export default function usePlanner(input: {
-  userId: string | undefined;
-  plannerId: string;
-  title: string;
-  order: number;
-}) {
+export default function usePlanner(
+  input: {
+    userId: string | undefined;
+    plannerId: string;
+    title: string;
+    order: number;
+  },
+  userCatalogYear: number,
+) {
   const [courseState, setCourseState] = useLoadPlanner(
     input.plannerId,
     input.userId,
+    userCatalogYear,
   );
 
   const handleCourseUpdate = (newState: PlannerData) => {

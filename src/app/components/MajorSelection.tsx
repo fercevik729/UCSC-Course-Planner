@@ -13,7 +13,7 @@ import Info from "@mui/icons-material/Info";
 import { useEffect, useState } from "react";
 import useMajorSelection from "../hooks/useMajorSelection";
 import { useSession } from "next-auth/react";
-import { initialPlanner, quartersPerYear } from "@/lib/plannerUtils";
+import { getInitialPlanner, quartersPerYear } from "@/lib/plannerUtils";
 
 const majors = [
   "CSE BS",
@@ -250,7 +250,7 @@ function SelectDefaultPlanner({
 }
 
 function MiniPlanner() {
-  const planner = initialPlanner;
+  const planner = getInitialPlanner(0);
 
   return (
     <Card>

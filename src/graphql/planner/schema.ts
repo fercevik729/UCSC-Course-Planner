@@ -66,7 +66,7 @@ export class PlannerDataInput {
 
   @Field(() => Int)
   @Min(1)
-  @Max(7)
+  @Max(10)
   years!: number;
 
   @Field(() => [LabelInput])
@@ -147,7 +147,7 @@ export class PlannerData {
 
   @Field(() => Int)
   @Min(1)
-  @Max(7)
+  @Max(10)
   years!: number;
 
   @Field(() => [Label])

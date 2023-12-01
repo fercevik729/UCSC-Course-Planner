@@ -1,6 +1,6 @@
 import { ApolloError, gql, useLazyQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
-import { deserializePlanner, initialPlanner } from "@/lib/plannerUtils";
+import { deserializePlanner, getInitialPlanner } from "@/lib/plannerUtils";
 import { MultiPlanner } from "../types/MultiPlanner";
 import { PlannerTitle } from "@/graphql/planner/schema";
 import { PlannerData } from "../types/PlannerData";
@@ -88,12 +88,15 @@ export const useLoadAllPlanners = (
 export const useLoadPlanner = (
   plannerId: string,
   userId: string | undefined,
+  userCatalogYear: number,
 ): [
   PlannerData,
   React.Dispatch<React.SetStateAction<PlannerData>>,
   { loading: boolean; error: ApolloError | undefined },
 ] => {
-  const [state, setState] = useState<PlannerData>(initialPlanner);
+  const [state, setState] = useState<PlannerData>(
+    getInitialPlanner(userCatalogYear),
+  );
   const [getData, { loading, error }] = useLazyQuery(GET_PLANNER, {
     onCompleted: (data) => {
       const planner = data.getPlanner;

@@ -1,5 +1,5 @@
 import QuarterCard from "./QuarterCard";
-import { quartersPerYear } from "../../lib/plannerUtils";
+import { getSchoolYear, quartersPerYear } from "../../lib/plannerUtils";
 import { PlannerData, findCoursesInQuarter } from "../types/PlannerData";
 import Search from "./Search";
 import { DragDropContext } from "@hello-pangea/dnd";
@@ -116,11 +116,14 @@ function Years({ courseState }: { courseState: PlannerData }) {
               slice_val,
               slice_val + quartersPerYear,
             );
+            // console.log(quarters[0])
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const [year, term] = quarters[0].id.split("-").slice(1);
 
             return (
               <Quarters
                 key={i}
-                year={i + 1}
+                year={parseInt(year)}
                 quarters={quarters}
                 courseState={courseState}
               />
@@ -155,7 +158,7 @@ function Quarters({
       }}
       defaultExpanded={true}
     >
-      <AccordionSummary>Year {year}</AccordionSummary>
+      <AccordionSummary>{getSchoolYear(year)}</AccordionSummary>
       <AccordionDetails>
         <div className="flex flex-row space-x-2">
           {quarters.map((quarter) => {

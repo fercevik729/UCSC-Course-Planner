@@ -22,12 +22,7 @@ export class MajorResolver {
    * @returns the updated or created `Major`
    */
   @Mutation(() => Major)
-  // async upsertMajor(
-  //   @Arg("userId") userId: string,
-  //   @Arg("major") major: MajorInput,
-  // ): Promise<Major> {
   async upsertMajor(@Arg("major") major: MajorInput): Promise<Major> {
-    console.log(major);
     return await new MajorService().upsertMajor(major);
   }
 }
